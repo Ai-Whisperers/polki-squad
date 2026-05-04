@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    image: polki-squad:prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.polki-squad.rule=Host(`polki-squad.paragu-ai.com`)"
+      - "traefik.http.routers.polki-squad.entrypoints=websecure"
+      - "traefik.http.services.polki-squad.loadbalancer.server.port=3000"
